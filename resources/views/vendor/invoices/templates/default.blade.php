@@ -6,12 +6,18 @@
 
         <style type="text/css" media="screen">
             html {
-                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
                 line-height: 1.15;
                 margin: 0;
             }
 
             body {
+                background-image: url('{{ $invoice->getBG() }}') 0 0/100% 100vh; 
+                background-repeat: no-repeat;
+                background-size:70% 50%;
+                background-attachment: fixed;
+                background-position: center;
+                opacity:0.1;
                 font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
                 font-weight: 400;
                 line-height: 1.5;
@@ -106,7 +112,7 @@
                 text-transform: uppercase !important;
             }
             * {
-                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
             }
             body, h1, h2, h3, h4, h5, h6, table, th, tr, td, p, div {
                 line-height: 1.1;
@@ -226,9 +232,11 @@
                     <td class="border-0" id="b0"></td>
                 </tr>
                 <tr>
-                    <td class="px-0 bt text-uppercase">
+                    <td class="px-0 bt text-uppercase" style="font-family:sans-serif">
                         @if($invoice->buyer->name)
-                            <strong>{{ $invoice->buyer->name }}</strong>
+                            <strong style="margin:0;padding:0;">
+                                {{ $invoice->buyer->name }}
+                            </strong>
                         @endif
                     </td>
                     <td class="px-0">
@@ -249,7 +257,7 @@
         <table class="table table-items" border="1px solid black">
             <thead>
                 <tr>
-                    <th scope="col" class="border-0 tableheads" style="padding-top:0;padding-bottom:0;" width=5%>SL</th>
+                    <th scope="col" class="border-0 tableheads" style="padding-top:0;padding-bottom:0;" width=6%>SL</th>
                     <th scope="col" class="left border-0 tableheads" style="padding-top:0;padding-bottom:0;" width=12%>Dated</th>
                     <th scope="col" class="left border-0 tableheads" style="padding-top:0;padding-bottom:0;">Item & Description</th>
                     <th scope="col" class="text-right border-0 tableheads" style="padding-top:0;padding-bottom:0;" width=10%>Amount</th>
@@ -290,7 +298,7 @@
             </tr>
         </table>
 
-        @if($invoice->notes)
+        {{-- @if($invoice->notes)
             <p>
                 {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
             </p>
@@ -301,7 +309,7 @@
         </p>
         <p>
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
-        </p>
+        </p> --}}
 
         <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {

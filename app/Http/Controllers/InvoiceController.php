@@ -136,7 +136,8 @@ class InvoiceController extends Controller
             ->addItems($items)
             ->notes($notes)
             ->totalAmount($total)
-            ->logo(public_path('vendor/invoices/sample-logo.png'))
+            ->logo(public_path('vendor/invoices/logo.jpg'))
+            ->bg(public_path('vendor/invoices/bg.jpg'))
             // You can additionally save generated invoice to configured disk
             ->save('public');
 
