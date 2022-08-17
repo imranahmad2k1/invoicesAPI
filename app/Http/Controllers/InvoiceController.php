@@ -75,13 +75,10 @@ class InvoiceController extends Controller
     public function generatepdf($invoice){
         $invoice = Productinvoice::find($invoice);
         if($invoice){
-            $items = $invoice->productinvoiceitems()->get();
+            $pitems = $invoice->productinvoiceitems()->get();
         }
         else{
             return response("Didn't found any Invoice for given Invoice ID");
-        }
-        foreach($items as $item){
-            //EACH ITEM
         }
 
         $client = new Party([
@@ -98,17 +95,18 @@ class InvoiceController extends Controller
             ],
         ]);
 
-        $items = [
-            (new InvoiceItem())
-                ->title('Service 1')
-                ->description('Your product or service description')
-                ->pricePerUnit(47.79)
-                ->quantity(2)
-                ->discount(10),
-            (new InvoiceItem())->title('Service 2')->pricePerUnit(71.96)->quantity(2),
-            (new InvoiceItem())->title('Service 3')->pricePerUnit(4.56),
-            (new InvoiceItem())->title('Service 4')->pricePerUnit(87.51)->quantity(7)->discount(4)->units('kg'),
-        ];
+        $items = [];
+        $total = 0;
+        foreach($pitems as $item){
+            $a = (new InvoiceItem())
+                ->dated($item->Dated)
+                ->description($item->ItemDescription)
+                ->amountt($item->Amount);
+                $total=$total+$item->Amount;
+            //EACH ITEM
+
+            array_push($items, $a);
+        }
 
         $notes = [
             'your multiline',
@@ -127,9 +125,9 @@ class InvoiceController extends Controller
             ->buyer($customer)
             ->seller($client)
             ->date(now()->subWeeks(3))
-            ->dateFormat('m/d/Y')
+            ->dateFormat('d/m/Y')
             ->payUntilDays(14)
-            ->currencySymbol('$')
+            ->currencySymbol('AED ')
             ->currencyCode('USD')
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator('.')
@@ -137,6 +135,7 @@ class InvoiceController extends Controller
             ->filename($client->name . ' ' . $customer->name)
             ->addItems($items)
             ->notes($notes)
+            ->totalAmount($total)
             ->logo(public_path('vendor/invoices/sample-logo.png'))
             // You can additionally save generated invoice to configured disk
             ->save('public');

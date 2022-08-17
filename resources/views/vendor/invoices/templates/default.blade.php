@@ -169,6 +169,15 @@
             .custtable{
                 width:80%;
             }
+            .tableheads{
+                background:#17365d;
+                color:white;
+                font-size: 1.1rem;
+            }
+
+            .table-items tbody tr td{
+                font-size: .9rem;
+            }
         </style>
     </head>
 
@@ -237,112 +246,48 @@
         </table>
 
         {{-- Table --}}
-        <table class="table table-items">
+        <table class="table table-items" border="1px solid black">
             <thead>
                 <tr>
-                    <th scope="col" class="border-0 pl-0">{{ __('invoices::invoice.description') }}</th>
-                    @if($invoice->hasItemUnits)
-                        <th scope="col" class="text-center border-0">{{ __('invoices::invoice.units') }}</th>
-                    @endif
-                    <th scope="col" class="text-center border-0">{{ __('invoices::invoice.quantity') }}</th>
-                    <th scope="col" class="text-right border-0">{{ __('invoices::invoice.price') }}</th>
-                    @if($invoice->hasItemDiscount)
-                        <th scope="col" class="text-right border-0">{{ __('invoices::invoice.discount') }}</th>
-                    @endif
-                    @if($invoice->hasItemTax)
-                        <th scope="col" class="text-right border-0">{{ __('invoices::invoice.tax') }}</th>
-                    @endif
-                    <th scope="col" class="text-right border-0 pr-0">{{ __('invoices::invoice.sub_total') }}</th>
+                    <th scope="col" class="border-0 tableheads" style="padding-top:0;padding-bottom:0;" width=5%>SL</th>
+                    <th scope="col" class="left border-0 tableheads" style="padding-top:0;padding-bottom:0;" width=12%>Dated</th>
+                    <th scope="col" class="left border-0 tableheads" style="padding-top:0;padding-bottom:0;">Item & Description</th>
+                    <th scope="col" class="text-right border-0 tableheads" style="padding-top:0;padding-bottom:0;" width=10%>Amount</th>
                 </tr>
             </thead>
             <tbody>
                 {{-- Items --}}
+                {{$i=0}}
                 @foreach($invoice->items as $item)
                 <tr>
-                    <td class="pl-0">
-                        {{ $item->title }}
-
-                        @if($item->description)
-                            <p class="cool-gray">{{ $item->description }}</p>
-                        @endif
+                    <td>
+                        <strong>{{ ++$i }}</strong>
                     </td>
-                    @if($invoice->hasItemUnits)
-                        <td class="text-center">{{ $item->units }}</td>
-                    @endif
-                    <td class="text-center">{{ $item->quantity }}</td>
-                    <td class="text-right">
-                        {{ $invoice->formatCurrency($item->price_per_unit) }}
-                    </td>
-                    @if($invoice->hasItemDiscount)
-                        <td class="text-right">
-                            {{ $invoice->formatCurrency($item->discount) }}
-                        </td>
-                    @endif
-                    @if($invoice->hasItemTax)
-                        <td class="text-right">
-                            {{ $invoice->formatCurrency($item->tax) }}
-                        </td>
-                    @endif
 
-                    <td class="text-right pr-0">
-                        {{ $invoice->formatCurrency($item->sub_total_price) }}
+                    <td class="text-right pl-0">
+                        {{ $item->date }}
+                    </td>
+
+                    <td class="left">
+                        {{ $item->description }}
+                    </td>
+
+                    <td class="center" style="font-size:1.2rem">
+                        <strong>{{ $item->amountt }}</strong>
                     </td>
                 </tr>
                 @endforeach
                 {{-- Summary --}}
-                @if($invoice->hasItemOrInvoiceDiscount())
-                    <tr>
-                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.total_discount') }}</td>
-                        <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->total_discount) }}
-                        </td>
-                    </tr>
-                @endif
-                @if($invoice->taxable_amount)
-                    <tr>
-                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.taxable_amount') }}</td>
-                        <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->taxable_amount) }}
-                        </td>
-                    </tr>
-                @endif
-                @if($invoice->tax_rate)
-                    <tr>
-                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.tax_rate') }}</td>
-                        <td class="text-right pr-0">
-                            {{ $invoice->tax_rate }}%
-                        </td>
-                    </tr>
-                @endif
-                @if($invoice->hasItemOrInvoiceTax())
-                    <tr>
-                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.total_taxes') }}</td>
-                        <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->total_taxes) }}
-                        </td>
-                    </tr>
-                @endif
-                @if($invoice->shipping_amount)
-                    <tr>
-                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.shipping') }}</td>
-                        <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->shipping_amount) }}
-                        </td>
-                    </tr>
-                @endif
-                    <tr>
-                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.total_amount') }}</td>
-                        <td class="text-right pr-0 total-amount">
-                            {{ $invoice->formatCurrency($invoice->total_amount) }}
-                        </td>
-                    </tr>
             </tbody>
+        </table>
+        <table width=100%>
+            <tr>
+                <td class="border-0" width=70%></td>
+                <td class="center tableheads"><strong>Total:</strong></td>
+                <td class="text-right pr-0 total-amount tableheads">
+                    {{ number_format($invoice->total_amount,2) }} AED
+                </td>
+            </tr>
         </table>
 
         @if($invoice->notes)
