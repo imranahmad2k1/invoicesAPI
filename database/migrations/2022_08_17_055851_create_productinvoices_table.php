@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('productinvoices', function (Blueprint $table) {
             $table->id();
             $table->string('BillTo');
             $table->string('InvoiceNo');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('productinvoices');
     }
 };

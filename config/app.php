@@ -194,6 +194,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        LaravelDaily\Invoices\InvoiceServiceProvider::class,
 
     ],
 
@@ -212,4 +213,5 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class,
 ];

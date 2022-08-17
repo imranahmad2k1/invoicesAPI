@@ -24,11 +24,5 @@ Route::controller(InvoiceController::class)->group(function(){
     Route::get('invoice','read');
     Route::put('invoice/{invoice}','update');
     Route::delete('invoice/{id}','destroy');
+    Route::get('getinvoice/{invoice}', 'generatepdf');
 });
-
-// Route::controller(InvoiceitemController::class)->group(function(){
-//     Route::post('invoice','create');
-//     Route::get('invoice','read');
-//     Route::put('invoice/{invoice}','update');
-//     Route::delete('invoice/{id}','destroy');
-// });

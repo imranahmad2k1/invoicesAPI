@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Invoiceitem extends Model
+class Productinvoiceitem extends Model
 {
     public $guarded = [];
     use HasFactory;
