@@ -290,10 +290,19 @@
         </table>
         <table width=100%>
             <tr>
-                <td class="border-0" width=70%></td>
+                <td class="border-0" width=60%></td>
                 <td class="center tableheads"><strong>Total:</strong></td>
                 <td class="text-right pr-0 total-amount tableheads">
                     {{ number_format($invoice->total_amount,2) }} AED
+                </td>
+            </tr>
+            <tr>
+                <td class="border-0" width=50%></td>
+                <td class="text-right">Total in words:</td>
+                <td class="text-right pr-0 total-amount">
+                    <p style="color:black">
+                        {{ $invoice->getTotalAmountInWords() }}
+                    </p>
                 </td>
             </tr>
         </table>
@@ -302,16 +311,17 @@
             <p>
                 {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
             </p>
-        @endif
+        @endif --}}
 
-        <p>
-            {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
-        </p>
-        <p>
+        {{-- <p style="color:black">
+            Total in Words:{{ $invoice->getTotalAmountInWords() }}
+        </p> --}}
+
+        {{-- <p>
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
         </p> --}}
 
-        <script type="text/php">
+        {{-- <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {
                 $text = "Page {PAGE_NUM} / {PAGE_COUNT}";
                 $size = 10;
@@ -321,6 +331,6 @@
                 $y = $pdf->get_height() - 35;
                 $pdf->page_text($x, $y, $text, $font, $size);
             }
-        </script>
+        </script> --}}
     </body>
 </html>
