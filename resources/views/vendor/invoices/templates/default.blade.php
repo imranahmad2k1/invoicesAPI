@@ -11,19 +11,42 @@
                 margin: 0;
             }
 
-            body {
-                background-image: url('{{ $invoice->getBG() }}') 0 0/100% 100vh; 
+            body:before {
+                /* background-image: url('{{ $invoice->getBG() }}') 0 0/100% 100vh; 
                 background-repeat: no-repeat;
                 background-size:70% 50%;
                 background-attachment: fixed;
                 background-position: center;
-                opacity:0.1;
+                opacity:0.1; */
+
+                content: ' ';
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-size:70% 50%;
+                background-image:  url('{{ $invoice->getBG() }}') 0 0/100% 100vh;
+                background-position: center;  
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                z-index: -1;
+                opacity: 0.1;
+            }
+
+            body {
+                /* background-image: url('{{ $invoice->getBG() }}') 0 0/100% 100vh; 
+                background-repeat: no-repeat;
+                background-size:70% 50%;
+                background-attachment: fixed;
+                background-position: center;
+                opacity:0.1; */
                 font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
                 font-weight: 400;
                 line-height: 1.5;
                 color: #212529;
                 text-align: left;
-                background-color: #fff;
+                /* background-color: #fff; */
                 font-size: 10px;
                 margin: 36pt;
             }
@@ -184,6 +207,35 @@
             .table-items tbody tr td{
                 font-size: .9rem;
             }
+
+            .strong{
+                font-weight: 700;
+            }
+
+            .bankdetails{
+                font-size: 1rem;
+            }
+
+            .bankdetails td{
+                padding-right: 15px;
+            }
+
+            .btitle{
+                font-size:1.1rem;
+                font-weight: 1000;
+                text-decoration: underline;
+                margin-bottom:0;
+                padding-bottom:0;
+            }
+
+            ol{
+                padding-left: 15px;
+            }
+            ol li{
+                font-size: .7rem;
+                
+            }
+
         </style>
     </head>
 
@@ -332,5 +384,70 @@
                 $pdf->page_text($x, $y, $text, $font, $size);
             }
         </script> --}}
+
+        <p style="page-break-after: always;"></p>
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="{{ $invoice->getLogo() }}" alt="logo" height="100">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="btitle">Online Transfer / Bank Detail Eco Guardians:</h2>
+        <table>
+            <tr class="bankdetails">
+                <td class="strong">Account Title</td>
+                <td>ECO GUARD PEST CONT DIS & SANIT SER LLC</td>
+            </tr>
+            <tr class="bankdetails">
+                <td class="strong">Account Number</td>
+                <td>200682554</td>
+            </tr>
+            <tr class="bankdetails">
+                <td class="strong">IBAN Number</td>
+                <td>AE180470000000200682554</td>
+            </tr>
+            <tr class="bankdetails">
+                <td class="strong">Swift Code</td>
+                <td>UNILAEAD</td>
+            </tr>
+            <tr class="bankdetails">
+                <td class="strong">Branch Code</td>
+                <td>0901</td>
+            </tr>
+            <tr class="bankdetails">
+                <td class="strong">Bank Name</td>
+                <td>SHARJAH – UNITED BANK LAMITED</td>
+            </tr>
+            <tr class="bankdetails">
+                <td class="strong">TRN No :</td>
+                <td>100442981500003</td>
+            </tr>
+        </table>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+        <h2 class="strong"><u>Terms & Conditions</u></h2>
+        <ol>
+            <li>
+                All Bank Charges to your account
+            </li>
+            <li>
+                Payment 50% advance before the Service Time & balance 50% on completion, unless otherwise agreed with the Provider.
+            </li>
+            <li>
+                Water and Power to be supplied on site
+            </li>
+            <li>
+                All equipment and solutions supplied by Eco Guardians Pest Control, Disinfection and sanitization Services.
+            </li>
+            <li>
+                All works to be carried out are subject to our terms & conditions.
+            </li>
+        </ol>
+
     </body>
 </html>
